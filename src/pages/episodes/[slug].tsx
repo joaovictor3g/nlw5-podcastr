@@ -1,13 +1,14 @@
 import { format, parseISO } from 'date-fns';
 import Image from 'next/image';
+import Head from 'next/head';
 import ptBr from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { api } from '../../services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import Link from 'next/link';
 
-
 import styles from '../../styles/pages/episodes/episode.module.scss';
+import { usePlayer } from '../../contexts/PlayerContext';
 
 type Episode = {
     id: string;
@@ -27,8 +28,13 @@ type EpisodeProps = {
 };
 
 export default function Episode({ episode }: EpisodeProps) {
+    const { play } = usePlayer();
+
     return (
         <div className={styles.episode}>
+            <Head>
+                <title>{episode.title} | Podcastr</title>
+            </Head>
             <div className={styles.wrapper}>
                 <div className={styles.thumbnailContainer}>
                     <Link href="/">
@@ -44,7 +50,10 @@ export default function Episode({ episode }: EpisodeProps) {
                         objectFit="cover"
                     />
 
-                    <button>
+                    <button
+                        type="button"
+                        onClick={() => play(episode)}
+                    >
                         <img src="/play.svg" alt="play episode"/>
                     </button>
                 </div>
@@ -99,6 +108,7 @@ export const getStaticProps: GetStaticProps = async(ctx) => {
         }),
         duration: Number(data.file.duration),
         durationAsString: convertDurationToTimeString(Number(data.file.duration)),
+        url: data.file.url
     }
 
     return {

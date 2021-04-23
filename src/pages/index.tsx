@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
+import Head from 'next/head';
 import Image from 'next/image';
 import { format, parseISO } from 'date-fns';
 import ptBr from 'date-fns/locale/pt-BR';
@@ -27,15 +28,20 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { play } = useContext(PlayerContext);
+  const { playList } = useContext(PlayerContext);
   
+  const episodeList = [...latestEpisodes, ...allEpisodes];
+
   return ( 
     <div className={styles.homePage}>
+      <Head>
+        <title>Home | Podcastr</title>
+      </Head>
       <section className={styles.latestEpisodes}>
         <h2>Últimos lançamentos</h2>
 
         <ul>
-          {latestEpisodes.map(episode => (
+          {latestEpisodes.map((episode, index: number) => (
             <li key={episode.id}>
               <Image 
                 width={192}
@@ -56,7 +62,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
               <button 
                 type="button"
-                onClick={() => play(episode)}  
+                onClick={() => playList(episodeList, index)}  
               >
                 <img src="/play-green.svg" alt="play latest episode" />
               </button>
@@ -80,7 +86,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
               </thead>
 
               <tbody>
-                {allEpisodes.map(episode => (
+                {allEpisodes.map((episode, index: number) => (
                   <tr key={episode.id}>
                     <td style={{ width:100 }}>
                       <Image 
@@ -105,7 +111,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                       <td>
                         <button 
                           type="button"
-                          onClick={() => play(episode)}  
+                          onClick={() => playList(episodeList, index+latestEpisodes.length)}  
                         >
                           <img src="/play-green.svg" alt="play"/>
                         </button>
