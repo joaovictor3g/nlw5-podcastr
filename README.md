@@ -31,7 +31,7 @@ yarn
 yarn server
 
 #run 
-yarn start
+yarn dev
 ```
 
 ## How contributing?
