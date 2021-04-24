@@ -61,7 +61,7 @@ export function Player() {
     }
 
     return (
-        <div className={styles.playerContainer}>
+        <div className={(isPlaying || episode) ? styles.playerContainer : styles.playerNotPlaying}>
             <header>
                 <img src="/playing.svg" alt="playing now"/>
                 <strong>Tocando agora</strong>

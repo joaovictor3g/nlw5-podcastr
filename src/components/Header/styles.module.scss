@@ -19,4 +19,25 @@
         margin-left: auto;
         text-transform: capitalize;
     }
+
+    .icon {
+        display: none;
+    }
+}
+
+
+@media(max-width: 770px) {
+    .headerContainer {
+        display: flex;
+        justify-content: space-between;
+        p, span {
+            display: none;
+        }
+    }
+
+    .responsiveHeader {
+        .icon {
+            display: flex;
+        }
+    }
 }

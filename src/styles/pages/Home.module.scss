@@ -179,3 +179,22 @@
         }
     }
 }
+
+@media(max-width: 800px) {
+    .responsiveTable {
+       display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .latestEpisodes {
+        ul {
+            display: block;
+            
+            li {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    }
+}

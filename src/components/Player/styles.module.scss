@@ -1,3 +1,7 @@
+.playerNotPlaying {
+    display: none;
+}
+
 .playerContainer {
     width: 26.5rem;
     height: 100vh;
@@ -131,6 +135,49 @@
 
             &:hover {
                 filter: brightness(0.95);
+            }
+        }
+    }
+}
+
+@media (max-width: 1160px) {  
+    .playerContainer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: max-content;
+        align-items: center;
+        // border-radius: 20px;
+
+        header, .emptyPlayer, .currentEpisode {
+            display: none;
+           
+        }
+
+        // .currentEpisode {
+        //     position: absolute;
+        //     left: 0;
+
+        //     strong, span {
+        //         display: none;
+        //     }
+
+        //     img {
+        //         width: 100px;
+        //         height: 100px;
+        //     }
+        // }
+
+        footer {
+            position: relative;
+
+            .progress {
+                // display: none;
+            }
+
+            .buttons {
+                
+                margin-top: 1rem;
             }
         }
     }
