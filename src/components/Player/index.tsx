@@ -61,7 +61,7 @@ export function Player() {
     }
 
     return (
-        <div className={(isPlaying || episode) ? styles.playerContainer : styles.playerNotPlaying}>
+        <div className={styles.playerContainer}>
             <header>
                 <img src="/playing.svg" alt="playing now"/>
                 <strong>Tocando agora</strong>
@@ -71,8 +71,10 @@ export function Player() {
                 <div className={styles.currentEpisode}>
                     <Image 
                         width={592} 
+                        // layout="responsive"
                         height={593} 
                         src={episode.thumbnail}
+                        className={styles.image}
                     />
                     <strong>{episode.title}</strong>
                     <span>{episode.members}</span>

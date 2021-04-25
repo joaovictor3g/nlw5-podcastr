@@ -47,5 +47,11 @@ git commit -m 'feat: My new feature'
 #Push branch 
 git push origin my-feature
 ```
+# Responsivity
+
+<div align="center">
+    <img src="./public/responsive-detail-page.gif" />
+    
+</div>
 
 See [MIT License](LICENSE)

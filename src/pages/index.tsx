@@ -28,9 +28,9 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { playList } = useContext(PlayerContext);
+  const { playList, togglePlay, currentEpisodeIndex, isPlaying, isPaused } = useContext(PlayerContext);
   
-  const episodeList = [...latestEpisodes, ...allEpisodes];
+  const episodes = [...latestEpisodes, ...allEpisodes];
 
   return ( 
     <div className={styles.homePage}>
@@ -42,7 +42,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
         <ul>
           {latestEpisodes.map((episode, index: number) => (
-            <li key={episode.id}>
+            <li className={(index === currentEpisodeIndex && (isPlaying || isPaused)) ? styles.isListItemActive : ''} key={episode.id}>
               <Image 
                 width={192}
                 height={192} 
@@ -59,13 +59,26 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <span>{episode.publishedAt}</span>
                 <span>{episode.durationAsString}</span>
               </div>
-
-              <button 
-                type="button"
-                onClick={() => playList(episodeList, index)}  
-              >
-                <img src="/play-green.svg" alt="play latest episode" />
-              </button>
+              
+             { (index === currentEpisodeIndex && isPlaying) ?
+              (<button  
+                  type="button"
+                  onClick={togglePlay}  
+                >
+                  <img 
+                    src="/pause-green.svg" 
+                    alt="play latest episode" 
+                    width="18px"
+                    height="18px"  
+                  /> 
+                </button>):
+                (<button  
+                  type="button"
+                  onClick={() => playList(episodes, index)}  
+                >
+                  <img src="/play-green.svg" alt="play latest episode" /> 
+                </button>)
+             }
             </li>
           ))}
         </ul>
@@ -99,22 +112,30 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                       />
                       </td>
 
-                      <td>
+                      <td className={(index+latestEpisodes.length === currentEpisodeIndex) ? styles.isListItemActive : ''}>
                           <Link href={`/episodes/${episode.id}`}>
-                            <a>{episode.title}</a>
+                            <a className={styles.linkResponsive}>{episode.title}</a>
                           </Link>
                       </td>
 
-                      <td>{episode.members}</td>
+                      <td className={styles.membersResponsive}>{episode.members}</td>
                       <td style={{ width:100 }}>{episode.publishedAt}</td>
                       <td>{episode.durationAsString}</td>
                       <td>
-                        <button 
-                          type="button"
-                          onClick={() => playList(episodeList, index+latestEpisodes.length)}  
-                        >
-                          <img src="/play-green.svg" alt="play"/>
-                        </button>
+                        { (index+latestEpisodes.length === currentEpisodeIndex && isPlaying) ?
+                          (<button  
+                              type="button"
+                              onClick={togglePlay}  
+                            >
+                              <img src="/pause-green.svg" alt="play latest episode" /> 
+                            </button>):
+                            (<button  
+                              type="button"
+                              onClick={() => playList(episodes, index+latestEpisodes.length)}  
+                            >
+                              <img src="/play-green.svg" alt="play latest episode" /> 
+                            </button>)
+                        }
                       </td>
                     
                   </tr>
